@@ -40,6 +40,7 @@ var propTypes = {
 	loadingPlaceholder: _react2['default'].PropTypes.oneOfType([// replaces the placeholder while options are loading
 	_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]),
 	loadOptions: _react2['default'].PropTypes.func.isRequired, // callback to load options asynchronously; (inputValue: string, callback: Function): ?Promise
+	multi: _react2['default'].PropTypes.bool, // multi-value input
 	options: _react.PropTypes.array.isRequired, // array of options
 	placeholder: _react2['default'].PropTypes.oneOfType([// field placeholder, displayed when there's no value (shared with Select)
 	_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]),
@@ -293,6 +294,10 @@ function reduce(obj) {
 var AsyncCreatable = _react2['default'].createClass({
 	displayName: 'AsyncCreatableSelect',
 
+	focus: function focus() {
+		this.select.focus();
+	},
+
 	render: function render() {
 		var _this = this;
 
@@ -310,6 +315,7 @@ var AsyncCreatable = _react2['default'].createClass({
 								return asyncProps.onInputChange(input);
 							},
 							ref: function (ref) {
+								_this.select = ref;
 								creatableProps.ref(ref);
 								asyncProps.ref(ref);
 							}
@@ -547,6 +553,10 @@ var Creatable = _react2['default'].createClass({
 		} else {
 			this.select.selectValue(option);
 		}
+	},
+
+	focus: function focus() {
+		this.select.focus();
 	},
 
 	render: function render() {
@@ -1127,6 +1137,7 @@ var Select = _react2['default'].createClass({
 
 	propTypes: {
 		addLabelText: _react2['default'].PropTypes.string, // placeholder displayed when you want to add a label on a multi-value input
+		'aria-describedby': _react2['default'].PropTypes.string, // HTML ID(s) of element(s) that should be used to describe this input (for assistive tech)
 		'aria-label': _react2['default'].PropTypes.string, // Aria label (for assistive tech)
 		'aria-labelledby': _react2['default'].PropTypes.string, // HTML ID of an element that should be used as the label (for assistive tech)
 		arrowRenderer: _react2['default'].PropTypes.func, // Create drop-down caret element
@@ -1441,7 +1452,7 @@ var Select = _react2['default'].createClass({
 			});
 		} else {
 			// otherwise, focus the input and open the menu
-			this._openAfterFocus = true;
+			this._openAfterFocus = this.props.openOnFocus;
 			this.focus();
 		}
 	},
@@ -1588,18 +1599,22 @@ var Select = _react2['default'].createClass({
 				break;
 			case 38:
 				// up
+				event.preventDefault();
 				this.focusPreviousOption();
 				break;
 			case 40:
 				// down
+				event.preventDefault();
 				this.focusNextOption();
 				break;
 			case 33:
 				// page up
+				event.preventDefault();
 				this.focusPageUpOption();
 				break;
 			case 34:
 				// page down
+				event.preventDefault();
 				this.focusPageDownOption();
 				break;
 			case 35:
@@ -1974,6 +1989,7 @@ var Select = _react2['default'].createClass({
 			'aria-owns': ariaOwns,
 			'aria-haspopup': '' + isOpen,
 			'aria-activedescendant': isOpen ? this._instancePrefix + '-option-' + focusedOptionIndex : this._instancePrefix + '-value',
+			'aria-describedby': this.props['aria-describedby'],
 			'aria-labelledby': this.props['aria-labelledby'],
 			'aria-label': this.props['aria-label'],
 			className: className,
@@ -2145,7 +2161,14 @@ var Select = _react2['default'].createClass({
 
 		var focusedOption = this.state.focusedOption || selectedOption;
 		if (focusedOption && !focusedOption.disabled) {
-			var focusedOptionIndex = options.indexOf(focusedOption);
+			var focusedOptionIndex = -1;
+			options.some(function (option, index) {
+				var isOptionEqual = option.value === focusedOption.value;
+				if (isOptionEqual) {
+					focusedOptionIndex = index;
+				}
+				return isOptionEqual;
+			});
 			if (focusedOptionIndex !== -1) {
 				return focusedOptionIndex;
 			}

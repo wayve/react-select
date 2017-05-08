@@ -503,15 +503,19 @@ const Select = React.createClass({
 				}
 			break;
 			case 38: // up
+				event.preventDefault();
 				this.focusPreviousOption();
 			break;
 			case 40: // down
+				event.preventDefault();
 				this.focusNextOption();
 			break;
 			case 33: // page up
+				event.preventDefault();
 				this.focusPageUpOption();
 			break;
 			case 34: // page down
+				event.preventDefault();
 				this.focusPageDownOption();
 			break;
 			case 35: // end key
