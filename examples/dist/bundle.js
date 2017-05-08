@@ -1599,6 +1599,7 @@ var Select = _react2['default'].createClass({
 				break;
 			case 38:
 				// up
+				debugger;
 				event.preventDefault();
 				this.focusPreviousOption();
 				break;
