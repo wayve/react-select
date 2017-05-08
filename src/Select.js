@@ -504,20 +504,20 @@ const Select = React.createClass({
 			break;
 			case 38: // up
 				debugger;
-				event.preventDefault();
 				this.focusPreviousOption();
+				event.preventDefault();
 			break;
 			case 40: // down
-				event.preventDefault();
 				this.focusNextOption();
+				event.preventDefault();
 			break;
 			case 33: // page up
-				event.preventDefault();
 				this.focusPageUpOption();
+				event.preventDefault();
 			break;
 			case 34: // page down
-				event.preventDefault();
 				this.focusPageDownOption();
+				event.preventDefault();
 			break;
 			case 35: // end key
 				if (event.shiftKey) {
