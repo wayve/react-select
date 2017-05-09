@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import AutosizeInput from 'react-input-autosize';
 import classNames from 'classnames';
@@ -280,6 +281,7 @@ const Select = React.createClass({
 			this.setState({
 				isOpen: true,
 			});
+			this.props.setSelectBoxOpen(true);
 		}
 	},
 
@@ -334,6 +336,7 @@ const Select = React.createClass({
 		// for the non-searchable select, toggle the menu
 		if (!this.props.searchable) {
 			this.focus();
+			this.props.setSelectBoxOpen(!this.state.isOpen);
 			return this.setState({
 				isOpen: !this.state.isOpen,
 			});
@@ -359,6 +362,7 @@ const Select = React.createClass({
 				isOpen: true,
 				isPseudoFocused: false,
 			});
+			this.props.setSelectBoxOpen(true);
 		} else {
 			// otherwise, focus the input and open the menu
 			this._openAfterFocus = this.props.openOnFocus;
@@ -423,6 +427,7 @@ const Select = React.createClass({
 			isFocused: true,
 			isOpen: isOpen
 		});
+		this.props.setSelectBoxOpen(isOpen);
 		this._openAfterFocus = false;
 	},
 
@@ -463,6 +468,7 @@ const Select = React.createClass({
 			isPseudoFocused: false,
 			inputValue: newInputValue,
 		});
+		this.props.setSelectBoxOpen(true);
 	},
 
 	handleKeyDown (event) {
@@ -505,21 +511,18 @@ const Select = React.createClass({
 			case 38: // up
 				debugger;
 				this.focusPreviousOption();
-				event.preventDefault();
 			break;
 			case 40: // down
 				this.focusNextOption();
-				event.preventDefault();
 			break;
 			case 33: // page up
 				this.focusPageUpOption();
-				event.preventDefault();
 			break;
 			case 34: // page down
 				this.focusPageDownOption();
-				event.preventDefault();
 			break;
 			case 35: // end key
+
 				if (event.shiftKey) {
 					return;
 				}
@@ -626,6 +629,7 @@ const Select = React.createClass({
 				this.addValue(value);
 			});
 		} else {
+			this.props.setSelectBoxOpen(false);
 			this.setState({
 				isOpen: false,
 				inputValue: '',
@@ -672,6 +676,7 @@ const Select = React.createClass({
 		event.stopPropagation();
 		event.preventDefault();
 		this.setValue(this.getResetValue());
+		this.props.setSelectBoxOpen(false);
 		this.setState({
 			isOpen: false,
 			inputValue: '',
@@ -724,6 +729,7 @@ const Select = React.createClass({
 			.filter(option => !option.option.disabled);
 		this._scrollToFocusedOptionOnUpdate = true;
 		if (!this.state.isOpen) {
+			this.props.setSelectBoxOpen(true);
 			this.setState({
 				isOpen: true,
 				inputValue: '',
@@ -1137,4 +1143,17 @@ const Select = React.createClass({
 
 });
 
-export default Select;
+const mapStateToProps = state => ({
+	selectBoxOpen: state.getIn(['ui', 'selectBoxOpen']),
+});
+
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setSelectBoxOpen: (open) => {
+			dispatch(setSelectBoxOpen(open));
+		},
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Select);
