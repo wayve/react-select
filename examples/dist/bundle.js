@@ -4244,6 +4244,14 @@ function stringifyValue(value) {
 	}
 }
 
+var _setSelectBoxOpen = function _setSelectBoxOpen(selectBoxOpen) {
+	return {
+		type: 'SET_SELECT_BOX_OPEN',
+		selectBoxOpen: selectBoxOpen
+	};
+};
+
+exports.setSelectBoxOpen = _setSelectBoxOpen;
 var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
 
 var instanceId = 1;
@@ -5411,23 +5419,13 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	return {
-		setSelectBoxOpen: (function (_setSelectBoxOpen) {
-			function setSelectBoxOpen(_x) {
-				return _setSelectBoxOpen.apply(this, arguments);
-			}
-
-			setSelectBoxOpen.toString = function () {
-				return _setSelectBoxOpen.toString();
-			};
-
-			return setSelectBoxOpen;
-		})(function (open) {
-			dispatch(setSelectBoxOpen(open));
-		})
+		setSelectBoxOpen: function setSelectBoxOpen(open) {
+			debugger;
+			dispatch(_setSelectBoxOpen(open));
+		}
 	};
 };
 
 exports['default'] = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Select);
-module.exports = exports['default'];
 
 },{"./Async":57,"./AsyncCreatable":58,"./Creatable":59,"./Option":60,"./Value":61,"./utils/defaultArrowRenderer":62,"./utils/defaultClearRenderer":63,"./utils/defaultFilterOptions":64,"./utils/defaultMenuRenderer":65,"classnames":undefined,"react":undefined,"react-dom":undefined,"react-input-autosize":undefined,"react-redux":21}]},{},[]);

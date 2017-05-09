@@ -3983,6 +3983,7 @@ var _setSelectBoxOpen = function _setSelectBoxOpen(selectBoxOpen) {
 	};
 };
 
+exports.setSelectBoxOpen = _setSelectBoxOpen;
 var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
 
 var instanceId = 1;
@@ -5158,7 +5159,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 exports['default'] = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Select);
-module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./Async":57,"./AsyncCreatable":58,"./Creatable":59,"./Option":60,"./Value":62,"./utils/defaultArrowRenderer":63,"./utils/defaultClearRenderer":64,"./utils/defaultFilterOptions":65,"./utils/defaultMenuRenderer":66,"react-redux":21}],62:[function(require,module,exports){

@@ -34,7 +34,7 @@ function stringifyValue (value) {
 	}
 }
 
-const setSelectBoxOpen = selectBoxOpen => ({
+export const setSelectBoxOpen = selectBoxOpen => ({
 	type: 'SET_SELECT_BOX_OPEN',
 	selectBoxOpen,
 });
