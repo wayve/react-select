@@ -34,6 +34,11 @@ function stringifyValue (value) {
 	}
 }
 
+const setSelectBoxOpen = selectBoxOpen => ({
+	type: 'SET_SELECT_BOX_OPEN',
+	selectBoxOpen,
+});
+
 const stringOrNode = React.PropTypes.oneOfType([
 	React.PropTypes.string,
 	React.PropTypes.node
@@ -1151,6 +1156,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setSelectBoxOpen: (open) => {
+			debugger;
 			dispatch(setSelectBoxOpen(open));
 		},
 	};

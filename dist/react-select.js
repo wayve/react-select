@@ -3976,6 +3976,13 @@ function stringifyValue(value) {
 	}
 }
 
+var _setSelectBoxOpen = function _setSelectBoxOpen(selectBoxOpen) {
+	return {
+		type: 'SET_SELECT_BOX_OPEN',
+		selectBoxOpen: selectBoxOpen
+	};
+};
+
 var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
 
 var instanceId = 1;
@@ -5143,19 +5150,10 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	return {
-		setSelectBoxOpen: (function (_setSelectBoxOpen) {
-			function setSelectBoxOpen(_x) {
-				return _setSelectBoxOpen.apply(this, arguments);
-			}
-
-			setSelectBoxOpen.toString = function () {
-				return _setSelectBoxOpen.toString();
-			};
-
-			return setSelectBoxOpen;
-		})(function (open) {
-			dispatch(setSelectBoxOpen(open));
-		})
+		setSelectBoxOpen: function setSelectBoxOpen(open) {
+			debugger;
+			dispatch(_setSelectBoxOpen(open));
+		}
 	};
 };
 
